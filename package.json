@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "description": "Get requests from mockingjay, write them as yaml",
   "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "devDependencies": {
+    "ava": "0.25.0"
+  },
   "author": "Liam Griffin-Jowett (Gryff)",
   "license": "MIT"
 }
