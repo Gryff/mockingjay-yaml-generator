@@ -1,0 +1,8 @@
+{
+  "name": "mockingjay-yaml-thing",
+  "version": "0.1.0",
+  "description": "Get requests from mockingjay, write them as yaml",
+  "main": "index.js",
+  "author": "Liam Griffin-Jowett (Gryff)",
+  "license": "MIT"
+}
