@@ -1,5 +1,5 @@
 {
-  "name": "mockingjay-yaml-thing",
+  "name": "mockingjay-yaml-generator",
   "version": "0.1.0",
   "description": "Get requests from mockingjay, write them as yaml",
   "main": "index.js",
