@@ -6,3 +6,5 @@ package-lock.json
 .npmrc
 .yarnrc
 
+test-data.yaml
+
