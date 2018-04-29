@@ -1,5 +1,6 @@
 import test from 'ava'
 import nock from 'nock'
+import mockingjayGETRequestBuilder from './helpers/mockingjayGETRequestBuilder'
 
 import mockingjayClient from '../src/mockingjayClient'
 
@@ -30,13 +31,4 @@ function mockMockingjay (data) {
   nock(mockingjayUrl)
     .get('/requests')
     .reply(200, data)
-}
-
-function mockingjayGETRequestBuilder(uri) {
-  return {
-    URI: uri,
-    Method: 'GET',
-    Body: '',
-    Form: null
-  }
 }
