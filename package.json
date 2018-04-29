@@ -7,10 +7,13 @@
     "test": "ava"
   },
   "dependencies": {
-    "js-yaml": "3.11.0"
+    "js-yaml": "3.11.0",
+    "request": "2.85.0",
+    "request-promise": "4.2.2"
   },
   "devDependencies": {
-    "ava": "0.25.0"
+    "ava": "0.25.0",
+    "nock": "9.2.5"
   },
   "author": "Liam Griffin-Jowett (Gryff)",
   "license": "MIT"
