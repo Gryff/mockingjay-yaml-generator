@@ -2,14 +2,14 @@ const fs = require('fs')
 const util = require('util')
 const writeFile = util.promisify(fs.writeFile)
 
-const mockingjayClient = require('./mockingjayClient')
+const getMockingjayRequests = require('./getMockingjayRequests')
 const realDataClient = require('./realDataClient')
 const requestToYaml = require('./requestToYaml')
 
 module.exports = mockingjayYamlGenerator
 
 function mockingjayYamlGenerator (mockingjayUrl, realServiceUrl, outputFilePath) {
-  return mockingjayClient(mockingjayUrl).getRequests()
+  return getMockingjayRequests(mockingjayUrl)
     .then(requests => {
       return realDataClient(realServiceUrl)
         .getRealData(requests.map(r => r.URI))
