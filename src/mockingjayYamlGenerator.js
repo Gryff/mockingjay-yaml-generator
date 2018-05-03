@@ -11,8 +11,11 @@ module.exports = mockingjayYamlGenerator
 function mockingjayYamlGenerator (mockingjayUrl, realServiceUrl, outputFilePath) {
   return getMockingjayRequests(mockingjayUrl)
     .then(requests => {
-      return getRealData(realServiceUrl, requests.map(r => r.URI))
-        .then(realData => ([realData, requests]))
+      const validRequests = requests
+        .filter(isNotFaviconRequest)
+
+      return getRealData(realServiceUrl, validRequests.map(r => r.URI))
+        .then(realData => ([realData, validRequests]))
     })
     .then(zipArrays)
     .then(requests => requests.map(([realData, request]) => {
@@ -30,7 +33,10 @@ function mockingjayYamlGenerator (mockingjayUrl, realServiceUrl, outputFilePath)
     })
 }
 
-
 function zipArrays ([one, two]) {
   return one.map((x, i) => ([x, two[i]]))
+}
+
+function isNotFaviconRequest (request) {
+  return !request.URI.includes('favicon')
 }
