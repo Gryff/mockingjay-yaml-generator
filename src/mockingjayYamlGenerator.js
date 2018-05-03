@@ -26,11 +26,6 @@ function mockingjayYamlGenerator (mockingjayUrl, realServiceUrl, outputFilePath)
         })
       }))
     .then(yamls => writeFile(outputFilePath, yamls.join('\n'), 'utf8'))
-    .then(() => console.log(`Success, yaml has been outputted to ${outputFilePath}`))
-    .catch(err => {
-      console.error(err.message)
-      process.exit(1)
-    })
 }
 
 function zipArrays ([one, two]) {
