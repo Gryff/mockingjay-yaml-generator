@@ -1,7 +1,7 @@
 import test from 'ava'
 import nock from 'nock'
 
-import realDataClient from '../src/realDataClient'
+import getRealData from '../src/getRealData'
 
 test('takes a list of urls, calls them and returns the data', async t => {
   const realServiceName = 'http://real-service.com'
@@ -15,8 +15,7 @@ test('takes a list of urls, calls them and returns the data', async t => {
 
   const expectedData = uris.map(fakeData)
 
-  const rdClient = realDataClient(realServiceName)
-  const result = await rdClient.getRealData(uris)
+  const result = await getRealData(realServiceName, uris)
 
   t.deepEqual(result, expectedData)
 })
