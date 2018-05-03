@@ -5,26 +5,30 @@ import getRealData from '../src/getRealData'
 
 test('takes a list of urls, calls them and returns the data', async t => {
   const realServiceName = 'http://real-service.com'
-  const uris = ['/one', '/two', '/three']
+  const requests = [
+    { URI: '/one', Headers: { 'x-special-header': 'required' } },
+    { URI: '/two', Headers: { 'x-special-header': 'required' } },
+    { URI: '/three', Headers: { 'x-special-header': 'required' } }
+  ]
 
-  uris.forEach(uri => {
-    nock(realServiceName)
-      .get(uri)
-      .reply(200, fakeData(uri))
+  requests.forEach(request => {
+    nock(realServiceName, { reqheaders: request.Headers })
+      .get(request.URI)
+      .reply(200, fakeData(request))
   })
 
-  const expectedData = uris.map(fakeData)
+  const expectedData = requests.map(fakeData)
 
-  const result = await getRealData(realServiceName, uris)
+  const result = await getRealData(realServiceName, requests)
 
   t.deepEqual(result, expectedData)
 })
 
-function fakeData (uri) {
+function fakeData (request) {
   return {
     users: [
-      { name: `${uri} user 1`, id: 1 },
-      { name: `${uri} user 2`, id: 2 }
+      { name: `${request.URI} user 1`, id: 1 },
+      { name: `${request.URI} user 2`, id: 2 }
     ]
   }
 }

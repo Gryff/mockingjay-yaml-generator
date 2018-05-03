@@ -10,22 +10,28 @@ test('gets requests from a mockingjay server, outputs a yaml file with data', as
   const mockingjayUrl = 'http://localhost:9099'
   const realServiceUrl = 'https://real-service.com'
   const outputFileName = 'test-data.yaml'
-  const uris = ['/one', '/two', '/three']
+  const mockingjayRequests = [
+    { URI: '/one', Headers: { 'x-special-header': 'required' } },
+    { URI: '/two', Headers: { 'x-special-header': 'required' } },
+    { URI: '/three', Headers: { 'x-special-header': 'required' } }
+  ]
 
   nock(mockingjayUrl)
     .get('/requests')
-    .reply(200, uris.map(mockingjayGETRequestBuilder))
+    .reply(200, mockingjayRequests.map(mockingjayGETRequestBuilder))
 
-  uris.forEach(uri => {
-    nock(realServiceUrl)
-      .get(uri)
-      .reply(200, fakeData(uri))
+  mockingjayRequests.forEach(request => {
+    nock(realServiceUrl, { reqheaders: request.Headers })
+      .get(request.URI)
+      .reply(200, fakeData(request.URI))
   })
 
   const expectedYaml = `- name: /one
   request:
     uri: /one
     method: GET
+    headers:
+      x-special-header: required
   response:
     code: 200
     body: |-
@@ -46,6 +52,8 @@ test('gets requests from a mockingjay server, outputs a yaml file with data', as
   request:
     uri: /two
     method: GET
+    headers:
+      x-special-header: required
   response:
     code: 200
     body: |-
@@ -66,6 +74,8 @@ test('gets requests from a mockingjay server, outputs a yaml file with data', as
   request:
     uri: /three
     method: GET
+    headers:
+      x-special-header: required
   response:
     code: 200
     body: |-

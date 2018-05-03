@@ -7,7 +7,8 @@ function requestToYaml ({request, requestName, response}) {
     name: requestName,
     request: {
       uri: request.URI,
-      method: request.Method
+      method: request.Method,
+      headers: request.Headers
     },
     response: {
       code: 200,

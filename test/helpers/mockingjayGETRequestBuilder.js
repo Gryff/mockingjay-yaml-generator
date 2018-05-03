@@ -1,9 +1,10 @@
 module.exports = mockingjayGETRequestBuilder
 
-function mockingjayGETRequestBuilder(uri) {
+function mockingjayGETRequestBuilder(options) {
   return {
-    URI: uri,
+    URI: options.URI,
     Method: 'GET',
+    Headers: options.Headers,
     Body: '',
     Form: null
   }

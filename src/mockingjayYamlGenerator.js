@@ -14,7 +14,7 @@ function mockingjayYamlGenerator (mockingjayUrl, realServiceUrl, outputFilePath)
       const validRequests = requests
         .filter(isNotFaviconRequest)
 
-      return getRealData(realServiceUrl, validRequests.map(r => r.URI))
+      return getRealData(realServiceUrl, validRequests)
         .then(realData => ([realData, validRequests]))
     })
     .then(zipArrays)

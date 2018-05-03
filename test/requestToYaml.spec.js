@@ -6,6 +6,7 @@ test('converts request to yaml', t => {
   const request = {
     URI: '/users?from=0&size=2',
     Method: 'GET',
+    Headers: { 'x-special-header': 'required' },
     Body: '',
     Form: null
   }
@@ -29,6 +30,8 @@ test('converts request to yaml', t => {
   request:
     uri: /users?from=0&size=2
     method: GET
+    headers:
+      x-special-header: required
   response:
     code: 200
     body: |-

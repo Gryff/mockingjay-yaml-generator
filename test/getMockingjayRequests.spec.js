@@ -15,7 +15,12 @@ test('makes a call to mockingjay server to get requests', async t => {
 })
 
 test('returns data from mockingjay without transforming', async t => {
-  const data = ['/one', '/two', '/three'].map(mockingjayGETRequestBuilder)
+  const data = [
+    { URI: '/one', Headers: { 'x-special-header': 'required' } },
+    { URI: '/two', Headers: { 'x-special-header': 'required' } },
+    { URI: '/three', Headers: { 'x-special-header': 'required' } }
+  ].map(mockingjayGETRequestBuilder)
+
   mockMockingjay(data)
 
   const mjRequests = await getMockingjayRequests(mockingjayUrl)
