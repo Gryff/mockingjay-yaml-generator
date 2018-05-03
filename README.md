@@ -7,6 +7,7 @@ Generate yaml files for mockingjay from a real service
 ### Using docker
 
 `docker build -t yaml-generator .`
+
 `docker run -v "${PWD}":/user/src/app yaml-generator [args]`
 
 where args are
