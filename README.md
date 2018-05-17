@@ -6,9 +6,7 @@ Generate yaml files for mockingjay from a real service
 
 ### Using docker
 
-`docker build -t yaml-generator .`
-
-`docker run -v "${PWD}":/user/src/app yaml-generator [args]`
+`docker run -v my-fakes-directory:/user/src/app/fakes gryff/mockingjay-yaml-generator [args]`
 
 where args are
 * [required] `--mockingjayUrl` or `-m`: the address of your mockingjay-server
@@ -19,11 +17,12 @@ where args are
 For example:
 ```
 docker run \
-    -v "${PWD}":/usr/src/app \
-    yaml-generator \
+    -v "${PWD}/fakes":/usr/src/app/fakes \
+    gryff/mockingjay-yaml-generator \
     --mockingjayUrl "http://host.docker.internal:9099" \
     --realUrl "https://my-real-server.com" \
-    --outputFilePath "my-real-data.yaml"
+    --outputFilePath "./fakes/my-real-data.yaml"
 ```
+Then check `./fakes/my-real-data.yaml` to see the output.
 
-Args are also explained on the command line, just type `docker run yaml-generator`
+Args are also explained on the command line, just type `docker run gryff/mockingjay-yaml-generator`
