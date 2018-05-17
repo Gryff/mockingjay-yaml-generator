@@ -12,7 +12,17 @@ const mockingjayRequests = [
   { URI: '/three', Headers: { 'x-special-header': 'required' } }
 ]
 
+const mockingjayRequestsWithDuplicates = [
+  { URI: '/one', Headers: { 'x-special-header': 'required' } },
+  { URI: '/one', Headers: { 'x-special-header': 'required' } },
+  { URI: '/two', Headers: { 'x-special-header': 'required' } },
+  { URI: '/two', Headers: { 'x-special-header': 'required' } },
+  { URI: '/three', Headers: { 'x-special-header': 'required' } }
+]
+
 test('gets requests from a mockingjay server, outputs a yaml file with data', testYamlGenerator, mockingjayRequests, expectedYaml())
+
+test('removes duplicate requests', testYamlGenerator, mockingjayRequestsWithDuplicates, expectedYaml())
 
 const readFile = util.promisify(fs.readFile)
 
