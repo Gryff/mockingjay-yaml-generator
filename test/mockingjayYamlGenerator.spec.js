@@ -6,15 +6,30 @@ import mockingjayGETRequestBuilder from './helpers/mockingjayGETRequestBuilder'
 
 import mockingjayYamlGenerator from '../src/mockingjayYamlGenerator'
 
-test('gets requests from a mockingjay server, outputs a yaml file with data', async t => {
+const mockingjayRequests = [
+  { URI: '/one', Headers: { 'x-special-header': 'required' } },
+  { URI: '/two', Headers: { 'x-special-header': 'required' } },
+  { URI: '/three', Headers: { 'x-special-header': 'required' } }
+]
+
+const mockingjayRequestsWithDuplicates = [
+  { URI: '/one', Headers: { 'x-special-header': 'required' } },
+  { URI: '/one', Headers: { 'x-special-header': 'required' } },
+  { URI: '/two', Headers: { 'x-special-header': 'required' } },
+  { URI: '/two', Headers: { 'x-special-header': 'required' } },
+  { URI: '/three', Headers: { 'x-special-header': 'required' } }
+]
+
+test('gets requests from a mockingjay server, outputs a yaml file with data', testYamlGenerator, mockingjayRequests, expectedYaml())
+
+test('removes duplicate requests', testYamlGenerator, mockingjayRequestsWithDuplicates, expectedYaml())
+
+const readFile = util.promisify(fs.readFile)
+
+async function testYamlGenerator (t, mockingjayRequests, expectedYaml) {
   const mockingjayUrl = 'http://localhost:9099'
   const realServiceUrl = 'https://real-service.com'
   const outputFileName = 'test-data.yaml'
-  const mockingjayRequests = [
-    { URI: '/one', Headers: { 'x-special-header': 'required' } },
-    { URI: '/two', Headers: { 'x-special-header': 'required' } },
-    { URI: '/three', Headers: { 'x-special-header': 'required' } }
-  ]
 
   nock(mockingjayUrl)
     .get('/requests')
@@ -26,7 +41,15 @@ test('gets requests from a mockingjay server, outputs a yaml file with data', as
       .reply(200, fakeData(request.URI))
   })
 
-  const expectedYaml = `- name: /one
+  await mockingjayYamlGenerator(mockingjayUrl, realServiceUrl, outputFileName)
+
+  const result = await readFile(outputFileName, 'utf8')
+
+  t.deepEqual(result, expectedYaml)
+}
+
+function expectedYaml () {
+  return `- name: /one
   request:
     uri: /one
     method: GET
@@ -92,15 +115,7 @@ test('gets requests from a mockingjay server, outputs a yaml file with data', as
         ]
       }
 `
-
-  await mockingjayYamlGenerator(mockingjayUrl, realServiceUrl, outputFileName)
-
-  const result = await readFile(outputFileName, 'utf8')
-
-  t.deepEqual(result, expectedYaml)
-})
-
-const readFile = util.promisify(fs.readFile)
+}
 
 function fakeData (uri) {
   return {

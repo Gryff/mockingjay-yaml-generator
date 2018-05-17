@@ -1,3 +1,4 @@
+const R = require('ramda')
 const fs = require('fs')
 const util = require('util')
 const writeFile = util.promisify(fs.writeFile)
@@ -11,7 +12,7 @@ module.exports = mockingjayYamlGenerator
 function mockingjayYamlGenerator (mockingjayUrl, realServiceUrl, outputFilePath) {
   return getMockingjayRequests(mockingjayUrl)
     .then(requests => {
-      const validRequests = requests
+      const validRequests = R.uniq(requests)
         .filter(isNotFaviconRequest)
 
       return getRealData(realServiceUrl, validRequests)
