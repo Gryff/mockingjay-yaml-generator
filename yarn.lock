@@ -3090,10 +3090,10 @@ qs@~6.5.2:
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha1-yzroBuh0BERYTvFUzo7pjUA/PjY=
 
-ramda@0.25.0:
-  version "0.25.0"
-  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
-  integrity sha1-j99oIxz/qQvC+UYDkKDLdKKbKak=
+ramda@0.26.1:
+  version "0.26.1"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha1-jUE1HrgRHFU1Nhf8O7/62OTTXQY=
 
 randomatic@^3.0.0:
   version "3.1.1"
