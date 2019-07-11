@@ -14,9 +14,12 @@
     "yargs": "11.0.0"
   },
   "devDependencies": {
-    "ava": "0.25.0",
+    "ava": "2.2.0",
     "nock": "10.0.6"
   },
   "author": "Liam Griffin-Jowett (Gryff)",
-  "license": "MIT"
+  "license": "MIT",
+  "ava": {
+		"helpers": [ "**/helpers/**/*" ]
+  }
 }
